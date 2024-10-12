@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Which Marine Animal Are You?</title>
+    <!-- Include Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+    <style>
+        /* Styles for the webpage */
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5; /* Light gray background */
+        }
+        /* Header with Banner Background */
+        #header {
+            width: 100%;
+            height: 200px; /* Adjust height as needed */
+            background: linear-gradient(to right, #4facfe, #00f2fe); /* Gradient blue background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #header h1 {
+            color: #ffffff; /* White text */
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+        .question {
+            display: none; /* Hide all questions initially */
+        }
+        .question.active {
+            display: block; /* Show the active question */
+        }
+        .question h3 {
+            margin-bottom: 20px;
+            text-align: center;
+            color: #333333; /* Dark gray */
+        }
+        .options {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .option-button {
+            width: 80%;
+            max-width: 400px;
+            padding: 15px;
+            margin: 10px 0;
+            font-size: 18px;
+            cursor: pointer;
+            border: none;
+            border-radius: 30px;
+            text-align: center;
+            background-color: #ffffff; /* White background */
+            color: #333333; /* Dark text */
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .option-button:hover {
+            background-color: #5A9BD6; /* Light blue on hover */
+            color: #ffffff; /* White text on hover */
+            transform: translateY(-3px);
+            box-shadow: 0 6px 10px rgba(0,0,0,0.15);
+        }
+        #resultPage {
+            display: none;
+            text-align: center;
+            color: #333333; /* Dark text */
+            padding: 20px;
+        }
+        #seeResultBtn, #protectBtn {
+            padding: 15px 30px;
+            font-size: 18px;
+            cursor: pointer;
+            border: none;
+            border-radius: 30px;
+            background-color: #ffffff; /* White background */
+            color: #333333; /* Dark text */
+            transition: all 0.3s ease;
+            margin-top: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        #seeResultBtn:hover, #protectBtn:hover {
+            background-color: #5A9BD6; /* Light blue on hover */
+            color: #ffffff; /* White text on hover */
+            transform: translateY(-3px);
+            box-shadow: 0 6px 10px rgba(0,0,0,0.15);
+        }
+        #finalResult {
+            margin-top: 30px;
+            font-size: 1.5em;
+            font-weight: bold;
+            white-space: pre-wrap;
+            color: #333333; /* Dark text */
+        }
+        /* Styled box for animal description */
+        #animalDescription {
+            margin: 20px auto; /* Center the box horizontally */
+            padding: 20px; /* Add space around the text */
+            font-size: 1.2em;
+            text-align: left; /* Align the text to the left */
+            color: #333333; /* Dark text */
+            max-width: 600px; /* Limit the width */
+            background-color: #f8f9fa; /* Light background color for the box */
+            border: 2px solid #5a9bd6; /* Border color to match theme */
+            border-radius: 10px; /* Rounded corners */
+            line-height: 1.5; /* Add line height for readability */
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Soft shadow effect */
+            display: none; /* Hide by default */
+        }
+        /* Center the animal image */
+        .image-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+        }
+        #animalImage {
+            max-width: 300px;
+            width: 100%;
+            height: auto;
+            border: 5px solid #ffffff;
+            border-radius: 15px;
+            display: none; /* Hide by default */
+        }
+        /* Styles for protection info */
+        #protectionInfo {
+            margin: 20px auto; /* Center the box horizontally */
+            padding: 20px; /* Add space around the text */
+            font-size: 1.2em;
+            text-align: left; /* Align the text to the left */
+            color: #333333; /* Dark text */
+            max-width: 600px; /* Limit the width */
+            background-color: #f8f9fa; /* Light background color for the box */
+            border: 2px solid #5a9bd6; /* Border color to match theme */
+            border-radius: 10px; /* Rounded corners */
+            line-height: 1.5; /* Add line height for readability */
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Soft shadow effect */
+            display: none; /* Hide by default */
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section with Banner Background -->
+    <div id="header">
+        <h1>Which Marine Animal Are You?</h1>
+    </div>
+    <div id="quizContainer">
+        <!-- Question 1 -->
+        <div class="question active" id="question1">
+            <h3>1. Which environment do you prefer?</h3>
+            <div class="options">
+                <div class="option-button" data-answer="a">a) Noisy environment</div>
+                <div class="option-button" data-answer="b">b) Moderate environment</div>
+                <div class="option-button" data-answer="c">c) Quiet environment</div>
+            </div>
+        </div>
+        <!-- Question 2 -->
+        <div class="question" id="question2">
+            <h3>2. What is your T-shirt size?</h3>
+            <div class="options">
+                <div class="option-button" data-answer="a">a) XS - Small</div>
+                <div class="option-button" data-answer="b">b) Medium</div>
+                <div class="option-button" data-answer="c">c) Large - XXL</div>
+            </div>
+        </div>
+        <!-- Question 3 -->
+        <div class="question" id="question3">
+            <h3>3. Do you prefer to be:</h3>
+            <div class="options">
+                <div class="option-button" data-answer="a">a) Mostly alone</div>
+                <div class="option-button" data-answer="b">b) Part of a group</div>
+            </div>
+        </div>
+        <!-- Question 4 -->
+        <div class="question" id="question4">
+            <h3>4. What is your preferred diet?</h3>
+            <div class="options">
+                <div class="option-button" data-answer="a">a) Meat only</div>
+                <div class="option-button" data-answer="b">b) Plants only</div>
+                <div class="option-button" data-answer="c">c) Both plants and meat</div>
+                <div class="option-button" data-answer="d">d) Tiny organisms</div>
+            </div>
+        </div>
+        <!-- Question 5 -->
+        <div class="question" id="question5">
+            <h3>5. Which word best describes your personality?</h3>
+            <div class="options">
+                <div class="option-button" data-answer="a">a) Passive</div>
+                <div class="option-button" data-answer="b">b) Playful</div>
+                <div class="option-button" data-answer="c">c) Resilient</div>
+                <div class="option-button" data-answer="d">d) Bold</div>
+                <div class="option-button" data-answer="e">e) Graceful</div>
+                <div class="option-button" data-answer="f">f) Intelligent</div>
+            </div>
+        </div>
+        <!-- Question 6 -->
+        <div class="question" id="question6">
+            <h3>6. How would you describe your pace of life?</h3>
+            <div class="options">
+                <div class="option-button" data-answer="a">a) I prefer to stay still</div>
+                <div class="option-button" data-answer="b">b) Slow and steady</div>
+                <div class="option-button" data-answer="c">c) Moderate speed</div>
+                <div class="option-button" data-answer="d">d) Fast-paced</div>
+            </div>
+        </div>
+    </div>
+    <!-- Result Page -->
+    <div id="resultPage">
+        <h2>Thank you for completing the quiz! Fetching results ...</h2>
+        <button id="seeResultBtn">See what sea animal I am</button>
+        <div id="finalResult" style="display: none;"></div>
+        <!-- Animal Image Container -->
+        <div class="image-container">
+            <img id="animalImage" src="" alt="">
+        </div>
+        <!-- Animal Description -->
+        <div id="animalDescription"></div>
+        <!-- Protection Button -->
+        <button id="protectBtn" style="display: none;">Learn more about how we can protect it</button>
+        <!-- Protection Information -->
+        <div id="protectionInfo"></div>
+    </div>
+    <script>
+        // JavaScript Code
+        let currentQuestion = 1;
+        let totalQuestions = 6;
+        let answers = '';
+        let finalAnimal = ''; // To store the final animal name
+
+        const optionButtons = document.querySelectorAll('.option-button');
+        optionButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                // Save the answer
+                answers += this.getAttribute('data-answer');
+                // Move to the next question or show the result page
+                if (currentQuestion < totalQuestions) {
+                    document.getElementById('question' + currentQuestion).classList.remove('active');
+                    currentQuestion++;
+                    document.getElementById('question' + currentQuestion).classList.add('active');
+                } else {
+                    // Hide the quiz and show the result page
+                    document.getElementById('quizContainer').style.display = 'none';
+                    document.getElementById('resultPage').style.display = 'block';
+                    
+                }
+            });
+        });
+
+        function mapAnswersToVector(answers) {
+            const mapping = { 'a': 1, 'b': 2, 'c': 3, 'd': 4, 'e': 5, 'f': 6};
+            return answers.split('').map(letter => mapping[letter]);
+        }
+
+        // Handle the result button click
+        document.getElementById('seeResultBtn').addEventListener('click', function() {
+            // Hide the initial message and button
+            document.getElementById('seeResultBtn').style.display = 'none';
+
+            // Display the final result container
+            document.getElementById('finalResult').style.display = 'block';
+
+            // Animal data with their corresponding answer strings
+            // var animals = [
+            //     { name: 'Coral', answers: 'aabdaa' },
+            //     { name: 'Dolphin', answers: 'bcbabd' },
+            //     { name: 'Eel', answers: 'bbaddd' },
+            //     { name: 'Fish', answers: 'aabccd' },
+            //     { name: 'Jellyfish', answers: 'baadab' },
+            //     { name: 'Lobster', answers: 'abaccb' },
+            //     { name: 'Nudibranch', answers: 'aaaaeb' },
+            //     { name: 'Octopus', answers: 'bbaafd' },
+            //     { name: 'Otter', answers: 'abbabd' },
+            //     { name: 'Penguin', answers: 'abbabc' },
+            //     { name: 'Pufferfish', answers: 'baaccb' },
+            //     { name: 'Sea Ray', answers: 'bcaaed' },
+            //     { name: 'Sea Urchin', answers: 'aabbcb' },
+            //     { name: 'Seahorse', answers: 'aabdab' },
+            //     { name: 'Shark', answers: 'ccaadd' },
+            //     { name: 'Shrimp', answers: 'aabccc' },
+            //     { name: 'Starfish', answers: 'aaaaaa' },
+            //     { name: 'Sea Turtle', answers: 'abacab' },
+            //     { name: 'Whale', answers: 'ccbaec' }
+            // ];
+
+            // Find the closest matching animal
+            // var highestScore = 0;
+            // var matchedAnimals = [];
+            // for (var i = 0; i < animals.length; i++) {
+            //     var score = 0;
+            //     for (var j = 0; j < answers.length; j++) {
+            //         if (answers[j] === animals[i].answers[j]) {
+            //             score++;
+            //         }
+            //     }
+            //     if (score > highestScore) {
+            //         highestScore = score;
+            //         matchedAnimals = [animals[i].name];
+            //     } else if (score === highestScore) {
+            //         matchedAnimals.push(animals[i].name);
+            //     }
+            // }
+
+            // Randomly select one animal from the matchedAnimals array
+            // finalAnimal = matchedAnimals[Math.floor(Math.random() * matchedAnimals.length)];
+
+            // Send the answers to the Flask app
+        // Map answers to vector
+        const vector = mapAnswersToVector(answers);
+                    
+        // Send the vector to the Flask app
+        fetch('/query', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ 'vector': vector })
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Extract the animal name from the response
+            finalAnimal = data.name; // Ensure this matches the key in your Flask response
+
+            // Display the result
+            var resultText = 'Your answers: ' + answers + '\nYou are a ' + finalAnimal + '!';
+            document.getElementById('finalResult').innerText = resultText;
+
+            // Fetch information from Wikipedia API to get the image and description
+            var wikiApiUrl = 'https://en.wikipedia.org/api/rest_v1/page/summary/' + encodeURIComponent(finalAnimal);
+            fetch(wikiApiUrl)
+                .then(response => response.json())
+                .then(data => {
+                    // Display the image
+                    if (data.thumbnail && data.thumbnail.source) {
+                        var animalImage = document.getElementById('animalImage');
+                        animalImage.src = data.thumbnail.source;
+                        animalImage.alt = finalAnimal;
+                        animalImage.style.display = 'block';
+                    } else {
+                        console.error("No image");
+                    }
+                    // Display the description
+                    if (data.extract) {
+                        document.getElementById('animalDescription').innerText = data.extract;
+                        document.getElementById('animalDescription').style.display = 'block';
+                    }
+                    // Show the protection button
+                    document.getElementById('protectBtn').style.display = 'inline-block';
+                })
+                .catch(error => {
+                    console.error('Error fetching data from Wikipedia:', error);
+                });
+            })
+            .catch((error) => {
+                console.error('Error fetching data from Flask app:', error);
+            });
+            
+        });
+
+        // Handle the protection button click
+        document.getElementById('protectBtn').addEventListener('click', function() {
+            // Protection information for each animal
+            var protectionData = {
+                'Coral': 'Coral reefs are threatened by pollution, overfishing, and climate change. Protect them by reducing carbon emissions and avoiding harmful chemicals.',
+                'Dolphin': 'Dolphins face threats from fishing nets and pollution. Support sustainable fishing practices and reduce plastic use.',
+                'Eel': 'Eels are affected by habitat loss and overfishing. Support habitat restoration and sustainable seafood choices.',
+                'Fish': 'Overfishing and pollution threaten many fish species. Choose sustainable seafood and reduce water pollution.',
+                'Jellyfish': 'While jellyfish populations are increasing due to climate change, maintaining balanced ecosystems helps control their numbers.',
+                'Lobster': 'Lobsters are overfished in some areas. Support sustainable lobster fisheries and regulations.',
+                'Nudibranch': 'These delicate creatures are sensitive to water quality. Reduce pollution to protect their habitats.',
+                'Octopus': 'Octopuses are intelligent and sensitive to environmental changes. Support marine conservation efforts.',
+                'Otter': 'Sea otters are endangered due to habitat loss and pollution. Support conservation programs and reduce oil spills.',
+                'Penguin': 'Penguins face climate change and overfishing. Reduce carbon footprint and support marine reserves.',
+                'Pufferfish': 'Habitat degradation affects pufferfish. Protect coastal environments and avoid pollution.',
+                'Sea Ray': 'Overfishing and habitat loss threaten sea rays. Support sustainable fishing and marine protected areas.',
+                'Sea Urchin': 'Sea urchins are affected by ocean acidification. Combat climate change to protect them.',
+                'Seahorse': 'Seahorses are collected for trade. Support bans on seahorse trade and protect their habitats.',
+                'Shark': 'Shark populations are declining due to overfishing. Support shark conservation and avoid shark products.',
+                'Shrimp': 'Shrimp farming can harm ecosystems. Choose sustainably farmed or wild-caught shrimp.',
+                'Starfish': 'Starfish are sensitive to water quality. Reduce pollution to protect marine life.',
+                'Sea Turtle': 'Sea turtles are endangered due to poaching and habitat loss. Support conservation and keep beaches clean.',
+                'Whale': 'Whales face threats from hunting and ship strikes. Support whale conservation efforts and regulations.'
+            };
+
+            // Display the protection information
+            var protectionInfo = protectionData[finalAnimal] || 'Information on protecting this animal is not available.';
+            document.getElementById('protectionInfo').innerText = protectionInfo;
+            document.getElementById('protectionInfo').style.display = 'block';
+        });
+    </script>
+</body>
+</html>
